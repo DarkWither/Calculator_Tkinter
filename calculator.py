@@ -1,9 +1,9 @@
-########################################################
-# Számológép                                           #
-# Version: 1.0 (első működő verzió, némi hibával :))   #
-# Made by: Attila Ladányi                              #
-# 2020.01.22                                           #
-########################################################
+#############################
+# Számológép                #
+# Version: 1.1              #
+# Made by: Attila Ladányi   #
+# 2020.01.22                #
+#############################
 
 from tkinter import *
 
@@ -26,26 +26,28 @@ class App:
 
         #Számok 1. oszlop
 
-        nbutton7 = Button(nframe1, text="7", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(7))
-        nbutton4 = Button(nframe1, text="4", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(4))
-        nbutton1 = Button(nframe1, text="1", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(1))
+        nbutton_square = Button(nframe1, text="^", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres("^"))
+        nbutton7 = Button(nframe1, text="7", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(7))
+        nbutton4 = Button(nframe1, text="4", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(4))
+        nbutton1 = Button(nframe1, text="1", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(1))
 
         # Számok 2. Oszlop
 
-        nbutton8 = Button(nframe2, text="8", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(8))
-        nbutton5 = Button(nframe2, text="5", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(5))
-        nbutton2 = Button(nframe2, text="2", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(2))
+        nbutton_square_root = Button(nframe2, text="GY", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres("gyok"))
+        nbutton8 = Button(nframe2, text="8", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(8))
+        nbutton5 = Button(nframe2, text="5", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(5))
+        nbutton2 = Button(nframe2, text="2", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(2))
 
         # Számok 3. Oszlop
-
-        nbutton9 = Button(nframe3, text="9", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(9))
-        nbutton6 = Button(nframe3, text="6", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(6))
-        nbutton3 = Button(nframe3, text="3", height=4, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(3))
+        nbutton_delete = Button(nframe3, text="9", height=3, width = 6, font = ('Arial', 15), command = lambda: self.delete())
+        nbutton9 = Button(nframe3, text="9", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(9))
+        nbutton6 = Button(nframe3, text="6", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(6))
+        nbutton3 = Button(nframe3, text="3", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(3))
 
         # Alsó sor (nulla és az egyenlő)
 
-        ebutton0 = Button(eframe, text="0", width = 13, height = 2, font = ('Arial', 15), command = lambda: self.szambekeres(0))
-        ebutton_equals = Button(eframe, text="=", width = 13, height = 2, font = ('Arial', 15), command = lambda: self.equals())
+        ebutton0 = Button(eframe, text="0", width = 13, height = 3, font = ('Arial', 15), command = lambda: self.szambekeres(0))
+        ebutton_equals = Button(eframe, text="=", width = 13, height = 3, font = ('Arial', 15), command = lambda: self.equals())
 
         # mframe
 
@@ -71,7 +73,9 @@ class App:
         eframe.pack(side=BOTTOM)
 
         # packing
-
+        nbutton_square.pack()
+        nbutton_square_root.pack()
+        nbutton_delete.pack()
         nbutton9.pack()
         nbutton8.pack()
         nbutton7.pack()
