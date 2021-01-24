@@ -6,6 +6,7 @@
 #############################
 
 from tkinter import *
+import re
 
 class App:
 
@@ -39,7 +40,7 @@ class App:
         nbutton2 = Button(nframe2, text="2", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(2))
 
         # Számok 3. Oszlop
-        nbutton_delete = Button(nframe3, text="9", height=3, width = 6, font = ('Arial', 15), command = lambda: self.delete())
+        nbutton_delete = Button(nframe3, text="<-", height=3, width = 6, font = ('Arial', 15), command = lambda: self.delete())
         nbutton9 = Button(nframe3, text="9", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(9))
         nbutton6 = Button(nframe3, text="6", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(6))
         nbutton3 = Button(nframe3, text="3", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(3))
@@ -97,42 +98,43 @@ class App:
         self.label.pack(side = RIGHT)
 
         self.number = ""
-        self.numbers = []
         self.operators = ""
         self.veg = 0
 
     def szambekeres(self, n):
-        self.number += str(n)
+        self.t += str(n)
+        print(self.t)
+        self.update_text()
 
     def muveletek(self, n):
         self.operators += n
-        self.numbers.append(int(self.number))
         self.t += str(self.number)
         self.t += str(n)
         self.number = ""
         self.update_text()
 
     def equals(self):
-        self.numbers.append(int(self.number))
         self.t += str(self.number)
         self.t += "="
         self.number = ""
-        self.vegeredmeny = self.numbers[0]
+        self.numbers = re.findall(r"[\w']+", self.t)
+        print(self.numbers)
+        self.vegeredmeny = int(self.numbers[0])
         i = 0
 
         while i != len(self.operators):
             i += 1
             if i == 0:
-                self.vegeredmeny = self.numbers[0]
+                self.vegeredmeny = int(self.numbers[0])
             else:
                 if self.operators[i - 1] == "+":
-                    self.vegeredmeny += self.numbers[i]
+                    self.vegeredmeny += int(self.numbers[i])
                 if self.operators[i - 1] == "-":
-                    self.vegeredmeny -= self.numbers[i]
+                    self.vegeredmeny -= int(self.numbers[i])
                 if self.operators[i - 1] == "*":
-                    self.vegeredmeny *= self.numbers[i]
+                    self.vegeredmeny *= int(self.numbers[i])
                 if self.operators[i - 1] == "/":
-                    self.vegeredmeny /= self.numbers[i]
+                    self.vegeredmeny /= int(self.numbers[i])
 
         veg = self.vegeredmeny
         self.t += str(veg)
@@ -146,6 +148,22 @@ class App:
     def update_text(self):
         # A felső szöveg frissítése a bekért számok/műveletek szerint
         self.label.configure(text = self.t)
+
+    def delete(self):
+        van = False
+        for i in self.t:
+            if i == "+" or i == "-" or i == "*" or i == "/":
+                van = True
+        muv = "/*-+"
+        if van:
+            for i in muv:
+                if self.t[len(self.t) - 1] == i:
+                    self.operators = self.operators[:-1]
+                    self.t = self.t[:-1]
+        else:
+            self.t = self.t[:-1]
+
+        self.update_text()
 
 if __name__ == '__main__':
     root = Tk()
