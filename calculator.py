@@ -1,12 +1,13 @@
 #############################
 # Számológép                #
-# Version: 1.1              #
+# Version: 2.0              #
 # Made by: Attila Ladányi   #
-# 2020.01.22                #
+# 2020.01.25                #
 #############################
 
 from tkinter import *
 import re
+import math
 
 class App:
 
@@ -27,14 +28,14 @@ class App:
 
         #Számok 1. oszlop
 
-        nbutton_square = Button(nframe1, text="^", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres("^"))
+        nbutton_square = Button(nframe1, text="^", height=3, width = 6, font = ('Arial', 15), command = lambda: self.muveletek("^"))
         nbutton7 = Button(nframe1, text="7", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(7))
         nbutton4 = Button(nframe1, text="4", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(4))
         nbutton1 = Button(nframe1, text="1", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(1))
 
         # Számok 2. Oszlop
 
-        nbutton_square_root = Button(nframe2, text="GY", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres("gyok"))
+        nbutton_square_root = Button(nframe2, text="GY", height=3, width = 6, font = ('Arial', 15), command = lambda: self.muveletek("|"))
         nbutton8 = Button(nframe2, text="8", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(8))
         nbutton5 = Button(nframe2, text="5", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(5))
         nbutton2 = Button(nframe2, text="2", height=3, width = 6, font = ('Arial', 15), command = lambda: self.szambekeres(2))
@@ -119,24 +120,37 @@ class App:
         self.number = ""
         self.numbers = re.findall(r"[\w']+", self.t)
         print(self.numbers)
-        self.vegeredmeny = int(self.numbers[0])
+
+        for i in range(len(self.operators)):
+            if self.operators[i] == "|":
+                self.numbers[i] = self.square_root(int(self.numbers[i]))
+
+        for i in range(len(self.operators)):
+            if self.operators[i] == "^":
+                print(self.numbers[i - 1])
+                self.numbers[i] = self.square(int(self.numbers[i]), int(self.numbers[i + 1]))
+                print(self.numbers[i])
+                self.numbers.pop(i + 1)
+
+        self.vegeredmeny = float(self.numbers[0])
+
         i = 0
 
         while i != len(self.operators):
             i += 1
             if i == 0:
-                self.vegeredmeny = int(self.numbers[0])
+                self.vegeredmeny = float(self.numbers[0])
             else:
                 if self.operators[i - 1] == "+":
-                    self.vegeredmeny += int(self.numbers[i])
+                    self.vegeredmeny += float(self.numbers[i])
                 if self.operators[i - 1] == "-":
-                    self.vegeredmeny -= int(self.numbers[i])
+                    self.vegeredmeny -= float(self.numbers[i])
                 if self.operators[i - 1] == "*":
-                    self.vegeredmeny *= int(self.numbers[i])
+                    self.vegeredmeny *= float(self.numbers[i])
                 if self.operators[i - 1] == "/":
-                    self.vegeredmeny /= int(self.numbers[i])
+                    self.vegeredmeny /= float(self.numbers[i])
 
-        veg = self.vegeredmeny
+        veg = round(self.vegeredmeny, 3)
         self.t += str(veg)
         self.update_text()
 
@@ -164,6 +178,12 @@ class App:
             self.t = self.t[:-1]
 
         self.update_text()
+
+    def square_root(self, n):
+        return math.sqrt(n)
+
+    def square(self, n, y):
+        return n ** y
 
 if __name__ == '__main__':
     root = Tk()
