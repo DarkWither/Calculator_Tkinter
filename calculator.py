@@ -102,9 +102,76 @@ class App:
         self.operators = ""
         self.veg = 0
 
+
+
+        def egy(event):
+            self.szambekeres(1)
+
+        def ketto(event):
+            self.szambekeres(2)
+
+        def harom(event):
+            self.szambekeres(3)
+
+        def negy(event):
+            self.szambekeres(4)
+
+        def ot(event):
+            self.szambekeres(5)
+
+        def hat(event):
+            self.szambekeres(6)
+
+        def het(event):
+            self.szambekeres(7)
+
+        def nyolc(event):
+            self.szambekeres(8)
+
+        def kilenc(event):
+            self.szambekeres(9)
+
+        def nulla(event):
+            self.szambekeres(0)
+
+        def plusz(event):
+            self.muveletek("+")
+
+        def minusz(event):
+            self.muveletek("-")
+
+        def szorzas(event):
+            self.muveletek("*")
+
+        def osztas(event):
+            self.muveletek("/")
+
+        def egyenlo(event):
+            self.equals()
+
+        def torles(event):
+            self.delete()
+
+        root.bind("1", egy)
+        root.bind("2", ketto)
+        root.bind("3", harom)
+        root.bind("4", negy)
+        root.bind("5", ot)
+        root.bind("6", hat)
+        root.bind("7", het)
+        root.bind("8", nyolc)
+        root.bind("9", kilenc)
+        root.bind("0", nulla)
+        root.bind("+", plusz)
+        root.bind("-", minusz)
+        root.bind("*", szorzas)
+        root.bind("/", osztas)
+        root.bind("<Return>", egyenlo)
+        root.bind("<BackSpace>", torles)
+
+
     def szambekeres(self, n):
         self.t += str(n)
-        print(self.t)
         self.update_text()
 
     def muveletek(self, n):
@@ -119,7 +186,7 @@ class App:
         self.t += "="
         self.number = ""
         self.numbers = re.findall(r"[\w']+", self.t)
-        print(self.numbers)
+
 
         for i in range(len(self.operators)):
             if self.operators[i] == "|":
@@ -127,9 +194,17 @@ class App:
 
         for i in range(len(self.operators)):
             if self.operators[i] == "^":
-                print(self.numbers[i - 1])
                 self.numbers[i] = self.square(int(self.numbers[i]), int(self.numbers[i + 1]))
-                print(self.numbers[i])
+                self.numbers.pop(i + 1)
+
+        for i in range(len(self.operators)):
+            if self.operators[i] == "*":
+                self.numbers[i] = int(self.numbers[i]) * int(self.numbers[i + 1])
+                self.numbers.pop(i + 1)
+
+        for i in range(len(self.operators)):
+            if self.operators[i] == "/":
+                self.numbers[i] = int(self.numbers[i]) / int(self.numbers[i + 1])
                 self.numbers.pop(i + 1)
 
         self.vegeredmeny = float(self.numbers[0])
@@ -145,10 +220,6 @@ class App:
                     self.vegeredmeny += float(self.numbers[i])
                 if self.operators[i - 1] == "-":
                     self.vegeredmeny -= float(self.numbers[i])
-                if self.operators[i - 1] == "*":
-                    self.vegeredmeny *= float(self.numbers[i])
-                if self.operators[i - 1] == "/":
-                    self.vegeredmeny /= float(self.numbers[i])
 
         veg = round(self.vegeredmeny, 3)
         self.t += str(veg)
