@@ -2,7 +2,7 @@
 # Számológép                #
 # Version: 2.0              #
 # Made by: Attila Ladányi   #
-# 2020.01.25                #
+# 2020.01.26                #
 #############################
 
 from tkinter import *
