@@ -5,5 +5,4 @@ It took me about 1,5 week to make this app. I had a few difficulities, but I lea
 
 I learned many things along the way, and I am happy, that this app is finally done!
 
-Made by,
-Attila Ladányi
+Made by: Attila Ladányi
